@@ -7,11 +7,6 @@ The project is primarily a learning and engineering project rather than a soluti
 
 The controller is based on the ATtiny45 microcontroller and allows the user to turn the LEDs on or off and adjust their brightness using a potentiometer. The WS2812B communication is implemented directly using AVR instructions and inline assembly rather than relying on a high-level LED library. This approach was chosen to both keep the firmware lightweight for the ATtiny45's limited memory and to provide precise control over the timing required by the WS2812B protocol.
 
-ATtiny45 specifications: 
-- 4 KB flash 
-- 256 B SRAM 
-- 256 B EEPROM
-
 ## Features
 - 30 x WS2812B LEDs arranged as two 15-LED strips
 - Two independent WS2812B data lines
@@ -22,6 +17,16 @@ ATtiny45 specifications:
 - Solid-color LED output in the current firmware
   
 ## Hardware
+### Microcontroller
+The controller is built around an ATtiny45-20PU microcontroller in an 8-pin PDIP package.
+
+The ATtiny45 provides the GPIO, ADC, and processing resources required by the project while keeping the controller small and simple. The firmware uses the microcontroller's hardware peripherals and directly accesses AVR registers for GPIO and ADC configuration.
+
+ATtiny45 specifications: 
+- 4 KB flash 
+- 256 B SRAM 
+- 256 B EEPROM
+
 ### LED Configuration
 The lighting system consists of two 0.5m WS2812B strips, each containing 15 LEDs at a density of 30 LEDs/m. The two strips are installed along the sides of the scooter deck, resulting in 30 LEDs in total.
 
