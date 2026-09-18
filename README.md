@@ -13,7 +13,14 @@ ATtiny45 specifications:
 - 256 B EEPROM
 
 ## Features
-
+- 30 x WS2812B LEDs arranged as two 15-LED strips
+- Two independent WS2812B data lines
+- Potentiometer-controlled brightness
+- 10-bit ADC input mapped to an 8-bit brightness value
+- Direct AVR register manipulation
+- Custom WS2812B communication using inline AVR assembly
+- Solid-color LED output in the current firmware
+  
 ## Hardware
 
 ## Pinout
