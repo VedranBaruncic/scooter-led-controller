@@ -22,5 +22,11 @@ ATtiny45 specifications:
 - Solid-color LED output in the current firmware
   
 ## Hardware
+### LED Configuration
+The lighting system consists of two 0.5m WS2812B strips, each containing 15 LEDs at a density of 30 LEDs/m. The two strips are installed along the sides of the scooter deck, resulting in 30 LEDs in total.
+
+The choice of 30 LEDs was based on the intended use of the system. Higher LED densities can make a significant visual difference when LED strips are viewed directly, such as in room lighting. However, for this project the LEDs are mounted underneath the scooter and are primarily intended to illuminate the ground while riding. Therefore, increasing the density beyond 30 LEDs/m would provide very small visual benefits while increasing power consumption and system complexity.
+
+Each strip has its own dedicated data line from the ATtiny45. The current firmware sends the same solid color to both strips, but keeping the data lines independent leaves the system open to future improvements, like patterns, animations, or independent control of the two sides without requiring changes to the physical LED wiring.
 
 ## Pinout
