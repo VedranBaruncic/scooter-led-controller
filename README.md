@@ -41,4 +41,38 @@ The ATtiny45's 10-bit ADC converts the potentiometer position into a value from 
 
 A brightness value of 0 results in LEDs being turned off. However, the potentiometer is intended primarily for brightness adjustment, as there is a separate physical switch used for turning the system power on or off.
 
-## Pinout
+## Power System
+### Power Architecture
+The system is powered by a 3.7V, 2100 mAh Li-ion battery. Since the WS2812B LEDs require a 5V supply, the SX1308 boost converter is used to increase the battery voltage to the required 5V.
+
+The physical switch mentioned earlier is used to turn the system on and off, and it is placed between the battery and boost converter, while the 5V output from the boost converter supplies both the ATtiny45 and the WS2812B LED strips.
+
+The battery is recharged using a dedicated USB Type-C Li-ion charging module with CC/CV charging and integrated battery protection. The charger supports a maximum charging current of 500 mA, so a full charge would take ~4 hours.
+
+### Power Budget
+Each WS2812B LED can draw up to approximately 60 mA at maximum brightness. With 30 LEDs, the theoretical maximum LED current is:
+```
+30 x 60mA = 1.8A
+```
+
+At the 5V LED supply, this corresponds to a theoretical maximum power consumption of:
+```
+5V * 1.8A = 9W
+```
+
+This represents the maximum LED load when all three RGB channels of all 30 LEDs are at full brightness. The actual power consumption of a real use is expected to be lower, since reaching the maximum would require all LEDs to display white at full brightness, which is not necessary for the intended underglow use.
+
+The battery has a nominal energy capacity of:
+```
+3.7V * 2.1Ah = 7.77Wh
+```
+
+The battery provides approximately 3.7V nominally, while the LEDs require a regulated 5V supply. The SX1308 boost converter increases the battery voltage to 5V by transferring energy through a switching circuit.
+
+This conversion is not 100% efficient. Some of the input energy is lost as heat and electrical losses in the converter's switching components, inductor, and other circuit elements. Therefore, the power available at the 5V output is lower than the power drawn from the battery, and the battery current is also higher than the current delivered to the LEDs. The rules of the system written down are:
+
+P<sub>in</sub> > P<sub>out</sub>
+
+and
+
+V<sub>in</sub> × I<sub>in</sub> > V<sub>out</sub> × I<sub>out</sub>
