@@ -34,4 +34,11 @@ The choice of 30 LEDs was based on the intended use of the system. Higher LED de
 
 Each strip has its own dedicated data line from the ATtiny45. The current firmware sends the same solid color to both strips, but keeping the data lines independent leaves the system open to future improvements, like patterns, animations, or independent control of the two sides without requiring changes to the physical LED wiring.
 
+### Brightness Control
+LED brightness is controlled using a WH148 10 kΩ potentiometer connected to the ATtiny45's PB3 / ADC3 input.
+
+The ATtiny45's 10-bit ADC converts the potentiometer position into a value from 0 to 1023. The firmware then maps this value to an 8-bit brightness value from 0 to 255 by shifting the ADC result right by two bits(dividing by 4).
+
+A brightness value of 0 results in LEDs being turned off. However, the potentiometer is intended primarily for brightness adjustment, as there is a separate physical switch used for turning the system power on or off.
+
 ## Pinout
