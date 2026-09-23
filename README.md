@@ -85,7 +85,9 @@ The charger connects directly to the battery through a JST connector and is sepa
 # System Architecture
 ### Hardware Architecture
 
-![Hardware Architecture picture](images/hardware-architecture.png)
+<p align="center">
+  <img src="images/hardware-architecture.png" alt="Hardware Architecture">
+</p>
 
 
 The hardware is organized around the SX1308 boost converter, which generates the regulated 5V supply required by both the ATtiny45 and the WS2812B strips.
@@ -107,6 +109,8 @@ The brightness value is then applied to the configured RGB color before the resu
 
 The main firmware flow can be summarized as:
 
-[picture]
+<p align="center">
+  <img src="images/firmware-flow.png" alt="Firmware flow">
+</p>
 
 The WS2812B data transmission is implemented using direct AVR register manipulation and inline assembly to maintain the precise timing required by the protocol. The reason this level of timing precision is used becomes clearer in the Timing section, where the WS2812B protocol timing requirements are looked into with more detail.
