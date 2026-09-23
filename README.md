@@ -1,13 +1,13 @@
 # Scooter LED Controller
 
-## Overview
+# Overview
 The Scooter LED Controller is a personal embedded-systems project designed to control a 30-LED WS2812B lighting system installed on the deck of a scooter.
 
 The project is primarily a learning and engineering project rather than a solution to a specific real-world problem. It was built to gain practical experience with AVR microcontrollers, ADCs, timing-critical communication, and low-level firmware development.
 
 The controller is based on the ATtiny45 microcontroller and allows the user to turn the LEDs on or off and adjust their brightness using a potentiometer. The WS2812B communication is implemented directly using AVR instructions and inline assembly rather than relying on a high-level LED library. This approach was chosen to both keep the firmware lightweight for the ATtiny45's limited memory and to provide precise control over the timing required by the WS2812B protocol.
 
-## Features
+# Features
 - 30 x WS2812B LEDs arranged as two 15-LED strips
 - Two independent WS2812B data lines
 - Potentiometer-controlled brightness
@@ -16,7 +16,7 @@ The controller is based on the ATtiny45 microcontroller and allows the user to t
 - Custom WS2812B communication using inline AVR assembly
 - Solid-color LED output in the current firmware
   
-## Hardware
+# Hardware
 ### Microcontroller
 The controller is built around an ATtiny45-20PU microcontroller in an 8-pin PDIP package.
 
@@ -41,7 +41,7 @@ The ATtiny45's 10-bit ADC converts the potentiometer position into a value from 
 
 A brightness value of 0 results in LEDs being turned off. However, the potentiometer is intended primarily for brightness adjustment, as there is a separate physical switch used for turning the system power on or off.
 
-## Power System
+# Power System
 ### Power Architecture
 The system is powered by a 3.7V, 2100 mAh Li-ion battery. Since the WS2812B LEDs require a 5V supply, the SX1308 boost converter is used to increase the battery voltage to the required 5V.
 
@@ -82,8 +82,12 @@ The Li-ion battery is charged using a dedicated USB Type-C charging module based
 
 The charger connects directly to the battery through a JST connector and is separate from the boost-converter path used to power the system during operation.
 
-## System Architecture
+# System Architecture
 ### Hardware Architecture
+
+![Hardware Architecture picture](images/hardware-architecture.png)
+
+
 The hardware is organized around the SX1308 boost converter, which generates the regulated 5V supply required by both the ATtiny45 and the WS2812B strips.
 
 The 5V output of the SX1308 is split into two parallel power branches. One branch supplies the ATtiny45, while the other supplies the two WS2812B strips. This allows the microcontroller and LEDs to just share the same power supply while remaining in separate power branches.
@@ -91,3 +95,5 @@ The 5V output of the SX1308 is split into two parallel power branches. One branc
 The potentiometer is connected to the ATtiny45's ADC3 input and provides the analog input used for brightness control.
 
 The Attiny45 controls the two WS2812B strips through separate data lines. PB0 is connected to the first strip, while PB2 is connected to the second strip. The two strips therefore have independent data connections, even though they share the same power supply.
+
+
