@@ -37,7 +37,7 @@ Each strip has its own dedicated data line from the ATtiny45. The current firmwa
 ### Brightness Control
 LED brightness is controlled using a WH148 10 kΩ potentiometer connected to the ATtiny45's PB3 / ADC3 input.
 
-The ATtiny45's 10-bit ADC converts the potentiometer position into a value from 0 to 1023. The firmware then maps this value to an 8-bit brightness value from 0 to 255 by shifting the ADC result right by two bits(dividing by 4).
+The ATtiny45's 10-bit ADC converts the potentiometer position into a value from 0 to 1023. The firmware then maps this value to an 8-bit brightness value from 0 to 255 by shifting the ADC result right by two bits(equivalent of division by 4).
 
 A brightness value of 0 results in LEDs being turned off. However, the potentiometer is intended primarily for brightness adjustment, as there is a separate physical switch used for turning the system power on or off.
 
@@ -69,10 +69,25 @@ The battery has a nominal energy capacity of:
 
 The battery provides approximately 3.7V nominally, while the LEDs require a regulated 5V supply. The SX1308 boost converter increases the battery voltage to 5V by transferring energy through a switching circuit.
 
-This conversion is not 100% efficient. Some of the input energy is lost as heat and electrical losses in the converter's switching components, inductor, and other circuit elements. Therefore, the power available at the 5V output is lower than the power drawn from the battery, and the battery current is also higher than the current delivered to the LEDs. The rules of the system written down are:
+This conversion is not 100% efficient. Some of the input energy is lost as heat and electrical losses in the converter's switching components, inductor, and other circuit elements. Therefore, the power available at the 5V output is lower than the power drawn from the battery, and the battery current is also higher than the current delivered to the LEDs. The relationship of the input and output power written down are:
 
 P<sub>in</sub> > P<sub>out</sub>
 
 and
 
 V<sub>in</sub> × I<sub>in</sub> > V<sub>out</sub> × I<sub>out</sub>
+
+### Charging
+The Li-ion battery is charged using a dedicated USB Type-C charging module based on a CC/CV charging system. The module provides a maximum charging current of 500 mA and includes protection against short circuits, overvoltage, and undervoltage.
+
+The charger connects directly to the battery through a JST connector and is separate from the boost-converter path used to power the system during operation.
+
+## System Architecture
+### Hardware Architecture
+The hardware is organized around the SX1308 boost converter, which generates the regulated 5V supply required by both the ATtiny45 and the WS2812B strips.
+
+The 5V output of the SX1308 is split into two parallel power branches. One branch supplies the ATtiny45, while the other supplies the two WS2812B strips. This allows the microcontroller and LEDs to just share the same power supply while remaining in separate power branches.
+
+The potentiometer is connected to the ATtiny45's ADC3 input and provides the analog input used for brightness control.
+
+The Attiny45 controls the two WS2812B strips through separate data lines. PB0 is connected to the first strip, while PB2 is connected to the second strip. The two strips therefore have independent data connections, even though they share the same power supply.
