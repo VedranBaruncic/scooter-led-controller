@@ -96,4 +96,17 @@ The potentiometer is connected to the ATtiny45's ADC3 input and provides the ana
 
 The Attiny45 controls the two WS2812B strips through separate data lines. PB0 is connected to the first strip, while PB2 is connected to the second strip. The two strips therefore have independent data connections, even though they share the same power supply.
 
+### Firmware Architecture
+The firmware is structured around a continous loop that reads the potentiometer, converts the ADC reading into a brightness value, and updates both WS2812B LED strips accordingly.
 
+During initialization, the firmware configures the ATtiny45 GPIO pins and ADC. The ADC is configured to read the potentiometer connected to ADC3.
+
+During normal use, the firmware repeatedly reads the 10-bit ADC value from the potentiometer. This value is converted from the ADC's 0-1023 range to an 8-bit brightness value from 0-255.
+
+The brightness value is then applied to the configured RGB color before the resulting LED data is transmitted to both WS2812B strips. Each strip has its own data output, with PB0 controlling the first strip and PB2 controlling the second strip.
+
+The main firmware flow can be summarized as:
+
+[picture]
+
+The WS2812B data transmission is implemented using direct AVR register manipulation and inline assembly to maintain the precise timing required by the protocol. The reason this level of timing precision is used becomes clearer in the Timing section, where the WS2812B protocol timing requirements are looked into with more detail.
