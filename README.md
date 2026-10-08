@@ -123,3 +123,71 @@ The WS2812B LEDs receive data through a single-wire communication protocol where
 
 A logical 1 uses a longer HIGH period followed by a shorter LOW period, while a logical 0 uses a shorter HIGH period followed by a longer LOW period, as you can see on the images below:
 
+<p align="center">
+  <img src="images/codes_signals.png" alt="Codes signals">
+</p>
+<p align="center">
+  <img src="images/codes_table.png" alt="Codes table">
+</p>
+
+At a 16 MHz CPU clock, one ATtiny45 CPU clock cycle corresponds to:
+
+16 MHz = 16,000,000 cycles/s
+
+1 / 16,000,000 = 62.5 ns/cycle
+
+This means that the duration of the output signal can be controlled directly by choosing the number and type of AVR instructions executed between changing the GPIO state.
+
+### Timing Requirements
+
+The WS2812B protocol requires the HIGH and LOW periods of each bit to remain within relatively narrow timing ranges. This makes the LED communication timing-sensitive compared with ordinary GPIO use control.
+
+For this reason, simply using high-level functions like digitalWrite(), delay() and others will not provide the same level of deterministic timing.
+
+Instead, the project generates the waveform directly using AVR instructions.
+
+### AVR Instruction Timing
+
+Since we want an efficiently made project, making it as a whole using purely assembly is not necessary, so therefore we only use assembly where in the data transmission to the LEDs.
+
+For example, a logical 1 begins by setting the output pin HIGH:
+
+```c
+"sbi %[port], 0\n\t"
+```
+
+Now instead of a classic delay, or checking timer values, we will directly use a CPU instruction called "nop", short for "No Operation", this is made because if we want to check any values like timer values, it takes multiple CPU cycles, and as seen before, with our ATtiny45, the timing is very critical, so therefore we use the "nop" function for a delay, because we know the exact time of 1 CPU cycle(62.5ns), so we just divide the time of delay needed by 1 CPU cycle. It would look like this:
+
+```c
+"nop\n\t"
+"nop\n\t"
+"nop\n\t"
+"nop\n\t"
+"..."
+```
+
+Then the pin is driven LOW using:
+
+```c
+"cbi %[port], 0\n\t"
+```
+
+This way of programming allows the pulse width to be constructed from individual processor cycles rather than relying on software delays with less predictable timing and a lot of overhead that is not needed here.
+
+### Logical Codes
+#### Logical 1
+
+A logical 1 waveform is generated using a longer HIGH period and shorter LOW period.
+
+The implementation looks like this:
+
+HIGH - NOP delay - LOW - NOP delay
+
+#### Logical 0
+
+A logical 0 waveform uses the opposite timing relationship:
+
+HIGH - short NOP delay - LOW - longer NOP delay
+
+This difference between pulse widths is what allows the WS2812B to distuingish between the two logical states.
+
