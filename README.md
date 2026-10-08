@@ -114,3 +114,12 @@ The main firmware flow can be summarized as:
 </p>
 
 The WS2812B data transmission is implemented using direct AVR register manipulation and inline assembly to maintain the precise timing required by the protocol. The reason this level of timing precision is used becomes clearer in the Timing section, where the WS2812B protocol timing requirements are looked into with more detail.
+
+## Timing
+
+### WS2812B Protocol
+
+The WS2812B LEDs receive data through a single-wire communication protocol where each bit is encoded using the duration of the HIGH and LOW portions of the signal.
+
+A logical 1 uses a longer HIGH period followed by a shorter LOW period, while a logical 0 uses a shorter HIGH period followed by a longer LOW period, as you can see on the images below:
+
