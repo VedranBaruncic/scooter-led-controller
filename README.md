@@ -1,5 +1,9 @@
 # Scooter LED Controller
 
+# Content
+
+ - [Timing](#timing)
+
 # Overview
 The Scooter LED Controller is a personal embedded-systems project designed to control a 30-LED WS2812B lighting system installed on the deck of a scooter.
 
