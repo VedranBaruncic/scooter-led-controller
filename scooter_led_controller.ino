@@ -73,6 +73,9 @@ void sendBit(uint8_t bit, uint8_t pin){
             "nop\n\t"
             "nop\n\t"
             "nop\n\t"
+            "nop\n\t"
+            "nop\n\t"
+            "nop\n\t"
 
             // LOW starts here
             "cbi %[port], 0\n\t"
@@ -98,11 +101,15 @@ void sendBit(uint8_t bit, uint8_t pin){
             // Short HIGH time
             "nop\n\t" // No operation
             "nop\n\t"
+            "nop\n\t"
+            "nop\n\t"
 
             // LOW starts here
             "cbi %[port], 0\n\t" // Clear bit in I/O Register
 
             // Long LOW time
+            "nop\n\t"
+            "nop\n\t"
             "nop\n\t"
             "nop\n\t"
             "nop\n\t"
@@ -136,6 +143,9 @@ void sendBit(uint8_t bit, uint8_t pin){
             "nop\n\t"
             "nop\n\t"
             "nop\n\t"
+            "nop\n\t"
+            "nop\n\t"
+            "nop\n\t"
 
             // LOW starts here
             "cbi %[port], 2\n\t"
@@ -161,11 +171,15 @@ void sendBit(uint8_t bit, uint8_t pin){
             // Short HIGH time
             "nop\n\t" // No operation
             "nop\n\t"
+            "nop\n\t"
+            "nop\n\t"
 
             // LOW starts here
             "cbi %[port], 2\n\t" // Clear bit in I/O Register
 
             // Long LOW time
+            "nop\n\t"
+            "nop\n\t"
             "nop\n\t"
             "nop\n\t"
             "nop\n\t"
