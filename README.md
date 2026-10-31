@@ -1,7 +1,12 @@
 # Scooter LED Controller
 
 # Content
-
+ - [Overview](#overview)
+ - [Features](#features)
+ - [Hardware](#hardware)
+ - [Power System](#power-system)
+ - [System Architecture](#system-architecture)
+ - [Firmware](#firmware)
  - [Timing](#timing)
 
 # Overview
