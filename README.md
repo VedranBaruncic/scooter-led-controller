@@ -6,7 +6,7 @@
  - [Hardware](#hardware)
  - [Power System](#power-system)
  - [System Architecture](#system-architecture)
- - [Firmware](#firmware)
+ - [Firmware Architecture](#firmware-architecture)
  - [Timing](#timing)
 
 # Overview
