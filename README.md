@@ -191,3 +191,46 @@ HIGH - short NOP delay - LOW - longer NOP delay
 
 This difference between pulse widths is what allows the WS2812B to distuingish between the two logical states.
 
+### Timing Calculation
+
+To determine the actual pulse durations needed, we need to consider the execution time of each AVR instruction used in the implementation.
+
+As said, at 16 MHz, one CPU cycle takes 62.5ns. The instructions used in the assembly part have the following specifications:
+
+| Instruction  | CPU cycles | Execution time |
+| :---: | :---: | :---: |
+| SBI |  2 | 125ns |
+| CBI  |  2  | 125ns |
+| NOP  |  1  | 62.5ns |
+
+Using this table we can calculate the execution time of the functions.
+
+#### Logical 1 Calculation
+
+If we look at the "Data transfer time" table we see that to send a logical 1, we need a sequence of T1H and T1L. T1H has a required time of 0.8us - 800ns ± 150ns. We will start looking at the actual time AFTER we set the output HIGH using the SBI instruction, therefore we know we have n number of nop operations and 1 CBI instruction and if we want the desired 800ns for T1H the calculations would be:
+
+N<sub>nop</sub> = (800 ns - t<sub>CBI</sub>) / t<sub>nop</sub>
+
+N<sub>nop</sub> = 11
+
+Then we calculate the same thing for T1L:
+
+N<sub>nop</sub> = (450 ns - t<sub>SBI</sub>) / t<sub>nop</sub>
+
+N<sub>nop</sub> = 5
+
+#### Logical 0 Calculation
+
+Now we will do the same but for sending the logical 0 code. The calculation for T0H would be:
+
+N<sub>nop</sub> = (400 ns - t<sub>CBI</sub>) / t<sub>nop</sub>
+
+N<sub>nop</sub> = 4
+
+Then we calculate the same thing for T0L:
+
+N<sub>nop</sub> = (850 ns - t<sub>SBI</sub>) / t<sub>nop</sub>
+
+N<sub>nop</sub> = 12
+
+These calculations provide the theoretical numbers of every required instruction to achieve the desired pulse durations. However, the actual timing can vary and can also be affected by the compiler or other things. Unfortunately, I don't have an oscilloscope so I couldn't research and show how the actual signals look like in practice.
