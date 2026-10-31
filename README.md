@@ -1,5 +1,7 @@
 # Scooter LED Controller
 
+
+
 # Content
  - [Overview](#overview)
  - [Features](#features)
@@ -21,7 +23,13 @@
    - [AVR Instruction Timing](#avr-instruction-timing)
 
 # Overview
-The Scooter LED Controller is a personal embedded-systems project designed to control a 30-LED WS2812B lighting system installed on the deck of a scooter.
+The Scooter LED Controller is a personal embedded-systems project designed to control a 30-LED WS2812B lighting system installed on the deck of a scooter. Here we can see a picture of it in use:
+
+<p align="center">
+  <img src="images/scooter_cropped.jpg"
+       alt="Scooter with LED underglow"
+       width="45%">
+</p>
 
 The project is primarily a learning and engineering project rather than a solution to a specific real-world problem. It was built to gain practical experience with AVR microcontrollers, ADCs, timing-critical communication, and low-level firmware development.
 
