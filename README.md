@@ -4,10 +4,21 @@
  - [Overview](#overview)
  - [Features](#features)
  - [Hardware](#hardware)
+   - [Microcontroller](#microcontroller)
+   - [LED Configuration](#led-configuration)
+   - [Brightness Control](#brightness-control)
  - [Power System](#power-system)
+   - [Power Architecture](#power-architecture)
+   - [Power Budget](#power-budget)
+   - [Charging](#charging)
  - [System Architecture](#system-architecture)
- - [Firmware Architecture](#firmware-architecture)
+   - [Hardware Architecture](#hardware-architecture)
+   - [Firmware Architecture](#firmware-architecture)
  - [Timing](#timing)
+   - [WS2812B Protocol](#ws2812b-protocol)
+   - [Timing Requirements](#timing-requirements)
+   - [Logical Codes](#logical-codes)
+   - [AVR Instruction Timing](#avr-instruction-timing)
 
 # Overview
 The Scooter LED Controller is a personal embedded-systems project designed to control a 30-LED WS2812B lighting system installed on the deck of a scooter.
